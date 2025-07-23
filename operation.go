@@ -116,6 +116,12 @@ func (operation *Operation) ParseComment(comment string, astFile *ast.File) erro
 
 	fields := FieldsByAnySpace(commentLine, 2)
 	attribute := fields[0]
+	if !strings.HasPrefix(attribute, "@") && len(fields) > 1 {
+		commentLine = fields[1]
+		fields = FieldsByAnySpace(commentLine, 2)
+		attribute = fields[0]
+	}
+
 	lowerAttribute := strings.ToLower(attribute)
 	var lineRemainder string
 	if len(fields) > 1 {
